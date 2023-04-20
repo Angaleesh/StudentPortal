@@ -70,17 +70,18 @@ include('sidebar.php');
                                         alt="User profile picture">
                                 </div>
 
-                                <h3 class="profile-username text-center"><?php $row["s_name"]?></h3>
+                                <h3 class="profile-username text-center"><?php echo $row["s_name"]?></h3>
 
-                                <p class="text-muted text-center"><?php $row["reg_id"]?></p>
+                                <p class="text-muted text-center"><?php echo $row["reg_id"]?></p>
 
 
 
-                                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                                <a href="dashboard.php?updid=<?php echo $row["s_id"]?>" class="btn btn-primary btn-block"><b>View</b></a>
                             </div>
                             <!-- /.card-body -->
                         </div>
-                    <?php }
+                        &nbsp; 
+                    <?php  }
                 } ?>
             </div>
         </div>

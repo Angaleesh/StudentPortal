@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
   $classname = $_POST['class_name'];
   $sem_id = $_POST['sem_id'];
   $sub_name = $_POST['sub_name'];
-  $add = "insert into subject(class_id,department,sem_id) values(" . $classname . ",'" . $dept . "'," . $sem_id . ")";
+  $add = "insert into subject(class_id,sub_name,sem_id) values(" . $classname . ",'" . $sub_name . "'," . $sem_id . ")";
   $ins = mysqli_query($dbConn, $add);
   if ($ins) {
     echo "<script>alert('Inserted Successfully.');</script>";
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
         <form class="dropdown-menu p-4 col-8" method="POST">
           <div class="form-group">
             <label for="exampleDropdownFormEmail2">Subject Name</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Class_name"
+            <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Subject_name"
               name="sub_name">
           </div>
           <div class="form-group" data-select2-id="55">
@@ -149,7 +149,7 @@ if (isset($_POST['submit'])) {
 
           <hr>
           <div style="text-align:center;">
-            <button type="submit" class="btn btn-primary col-4">Add</button>
+            <button type="submit" name="submit" class="btn btn-primary col-4">Add</button>
 
           </div>
         </form>

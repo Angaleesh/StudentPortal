@@ -16,12 +16,16 @@ if (isset($_POST['add'])) {
     $f_name = $_POST['f_name'];
     $password = $_POST['password'];
     $year = $_POST['year'];
-    $stream = $_POST['stream'];
+    $class_id=$_POST['class_id'];
+    $r="select class_name from class;";
+    $r1=mysqli_query($dbConn, $r);
+    $str=mysqli_fetch_array($r1);
+    $stream = $str[0];
     $reg_id = $_POST['reg_id'];
     $dob = $_POST['dob'];
     // echo $utype;
 
-    $query = "update `students` set s_name='" . $s_name . "',f_name='" . $f_name . "',password='" . $password . "',year='" . $year . "',stream='" . $stream . "',reg_id='" . $reg_id . "',dob='" . $dob . "' where s_id=" . $updid;
+    $query = "update `students` set class_id=".$class_id.",s_name='" . $s_name . "',f_name='" . $f_name . "',password='" . $password . "',year='" . $year . "',stream='" . $stream . "',reg_id='" . $reg_id . "',dob='" . $dob . "' where s_id=" . $updid;
     $upd = mysqli_query($dbConn, $query);
     if ($upd) {
         header('location:student.php');
@@ -124,23 +128,24 @@ if (isset($_POST['add'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <label for="exampleDropdownFormPassword2">Course</label>
-                                <select class="form-select-lg mb-3 col-12" aria-label="Default select example">
+                                <div class="form-group" data-select2-id="55">
+                  <label>Course</label>
+                  <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" name="class_id">
+                            <?php
+                            $sql = "select * from class;";
+                            $result = mysqli_query($dbConn, $sql);
+                            if ($result) {
+                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <option value="<?php echo $row['class_id']?>" >
+                                        <?php echo $row['class_name'] ?>
+                                    </option>
                                     <?php
-                                    $sql = "select * from class;";
-                                    $result = mysqli_query($dbConn, $sql);
-                                    if ($result) {
-                                        while ($row = mysqli_fetch_assoc($result)) { ?>
-                                            <option value="<?php $row['class_name'] ?>" name='stream'>
-                                                <?php $row['class_name'] ?>
-                                            </option>
-                                            <?php
-                                        }
-                                    }
+                                }
+                            }
 
-                                    ?>
+                            ?>
 
-                                </select>
+                        </select></div>
                                 <label for="exampleDropdownFormPassword2">Year</label>
                                 <select class="form-select-lg mb-3 col-12" aria-label="Default select example">
                                     <option value="2020">2020</option>

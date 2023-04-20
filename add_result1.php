@@ -2,11 +2,6 @@
 session_start();
 include('database.php');
 include('a_sidebar.php');
-if(isset($_POST['update'])){
-    $reg_id=$_GET['reg_id'];
-    $sem_id=$_GET['sem_id'];
-    header('location : add_result1.php?reg_id="$reg_id"');
-}
 ?>
 
 <head>
@@ -36,9 +31,8 @@ if(isset($_POST['update'])){
     <!-- summernote -->
     <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 </head>
-
 <body>
-    <div class="content-wrapper">
+<div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
@@ -55,81 +49,68 @@ if(isset($_POST['update'])){
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
-        <!-- /.content-header -->
-        <!--  -->
-<?php if(!(isset($_GET['uodate']))){?>
-        <form class=" ml-2 p-4" method="GET" action="add_result1.php" >
-            <div class="form-group">
-                <label for="exampleDropdownFormEmail2">Register ID</label>
-                <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Register ID"
-                    name="reg_id">
-            </div>
-            <div class="form-group" data-select2-id="55">
-            <label>Semester</label>
-            <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17"
-              tabindex="-1" aria-hidden="true" name="sem_id">
-              <option value="1">Semester - I</option>
-              <option value="2">Semester - II</option>
-              <option value="3">Semester - III</option>
-              <option value="4">Semester - IV</option>
-              <option value="5">Semester - V</option>
-              <option value="6">Semester - VI</option>
-            </select>
-          </div>
-            <hr>
-            <div style="text-align:center;">
-                <button type="update" name="update" class="btn btn-primary col-4">Add</button>
-            </div>
-    </div>
-    </form>
-    <?php }?>
-    <?php
-    $i = 1;
+        
+        <div class="content">
+      <div class="card ">
+<?php
+    $i = 0;
+    $result1=[];
     if (isset($_GET['update'])) {
         $sql = "select class_id from students where reg_id='" . $_GET['reg_id'] . "'";
         $r = mysqli_query($dbConn, $sql);
         $r1 = mysqli_fetch_array($r);
-        $qry = "select sub_name from subjects where class_id=" . $r1[0]." and sem_id=".$_GET['sem_id'];
+        $qry = "select sub_name from subject where class_id=" . $r1[0]." and sem_id=".$_GET['sem_id'];
         $result = mysqli_query($dbConn, $qry);
-        if ($result) {
-
-            while ($row = mysqli_fetch_array($result)) { ?>
-                <form class=" ml-2 p-4" method="POST">
-                    <div class="form-group">
-                        <label for="exampleDropdownFormEmail2">
-                            <?php echo $row[0] ?>
+        $result1=mysqli_fetch_array($result);
+        echo $result1[0];
+         if ($result) {
+             while ($row = mysqli_fetch_array($result)) { ?>
+                 <form class=" ml-2 p-4" method="POST">
+                     <div class="form-group">
+                         <label for="exampleDropdownFormEmail2">
+                         
+                             <?php echo $row['sub_name']; ?>
                         </label>
-                        <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Register ID"
-                            name="<?php echo $i; ?>">
-                    </div>
+                        <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Enter Mark"
+          name="<?php echo $i; ?>">
+                     </div>
 
-                    <hr>
-                    <!-- <div style="text-align:center;">
-<button type="submit" name="update" class="btn btn-primary col-4" >Add</button>
-</div> -->
-                    </div>
-                </form>
-                <?php
-                $i++;
-            }
-        }
+                     <hr>
+                     <!-- <div style="text-align:center;">
+// // <button type="submit" name="update" class="btn btn-primary col-4" >Add</button>
+// // </div> -->
+                    
+                 <?php
+                 $i++;
+             }
+         }
             ?>
             <div style="text-align:center;">
                 <button type="submit" name="submit" class="btn btn-primary col-4">Submit</button>
             </div>
+            </div>
+                </form>
             <?php
         }
 
         if (isset($_POST['submit'])) {
-            $k = 1;
-            while ($sub = mysqli_fetch_array($result)) {
-                $query = "insert into result(sub_name,reg_id,s_mark) values('" . $sub[0] . "','" . $_POST['reg_id'] . "'," . $_POST[$k] . ")";
+            $k = 0;
+    
+            while ($k<$i) {
+                $query = "insert into result(sub_name,sem_id,reg_id,s_mark) values('" . $result1[$k] . "',".$_GET['sem_id'].",'" . $_GET['reg_id'] . "'," . $_POST[$k] . ")";
                 $p = mysqli_query($dbConn, $query);
                 $k++;
+            if($p){
+                echo "inserted";
             }
+            else{
+                echo $k;
+              }  }
         }
    
     ?>
+</div>
+</div></div>
     <!-- /.row -->
     <!-- Main row -->
     <?php

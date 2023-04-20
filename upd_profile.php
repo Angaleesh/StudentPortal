@@ -13,7 +13,11 @@ if (isset($_POST['update'])) {
     $f_name = $_POST['f_name'];
     $password = $_POST['password'];
     $year = $_POST['year'];
-    $stream = $_POST['stream'];
+    $class_id=$_POST['class_id'];
+    $r="select class_name from class;";
+    $r1=mysqli_query($dbConn, $r);
+    $str=mysqli_fetch_array($r1);
+    $stream = $str[0];
     $reg_id = $_POST['reg_id'];
     $dob = $_POST['dob'];
     $Address = $_POST['Address'];
@@ -21,7 +25,7 @@ if (isset($_POST['update'])) {
     $m_number = $_POST['m_number'];
     // echo $utype;
 
-    $query = "update `students` set s_name='".$s_name."',Address='".$Address."',email_id='".$email_id."',m_number='".$m_number."',f_name='".$f_name."',password='".$password."',year='".$year."',stream='".$stream."',reg_id='".$reg_id."',dob='".$dob."' where s_id=".$_SESSION["member_id"];
+    $query = "update `students` set class_id=".$class_id.",s_name='".$s_name."',Address='".$Address."',email_id='".$email_id."',m_number='".$m_number."',f_name='".$f_name."',password='".$password."',year='".$year."',stream='".$stream."',reg_id='".$reg_id."',dob='".$dob."' where s_id=".$_SESSION["member_id"];
     $upd = mysqli_query($dbConn, $query);
     if ($upd) {
         header('location:dashboard.php');
@@ -155,25 +159,27 @@ if (isset($_FILES['uploadfile'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <label for="exampleDropdownFormEmail2">Course</label>
-                                <select class="form-select-lg mb-3 col-12" aria-label="Default select example">
+                                
+                        <div class="form-group" data-select2-id="55">
+                  <label>Course</label>
+                  <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" name="class_id">
+                            <?php
+                            $sql = "select * from class;";
+                            $result = mysqli_query($dbConn, $sql);
+                            if ($result) {
+                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <option value="<?php echo $row['class_id']?>" >
+                                        <?php echo $row['class_name'] ?>
+                                    </option>
                                     <?php
-                                    $sql = "select * from class;";
-                                    $result = mysqli_query($dbConn, $sql);
-                                    if ($result) {
-                                        while ($row = mysqli_fetch_assoc($result)) { ?>
-                                            <option value="<?php $row['class_name'] ?>" name='stream'>
-                                                <?php $row['class_name'] ?>
-                                            </option>
-                                            <?php
-                                        }
-                                    }
+                                }
+                            }
 
-                                    ?>
+                            ?>
 
-                                </select>
-                                <label for="exampleDropdownFormPassword2">Year</label>
-                                <select class="form-select-lg mb-3 col-12" aria-label="Default select example">
+                        </select></div>                               
+                         <label for="exampleDropdownFormPassword2">Year</label>
+                                <select class="form-select-lg mb-3 col-12" aria-label="Default select example" name="year">
                                     <option value="2020">2020</option>
                                     <option value="2021">2021</option>
                                     <option value="2022">2022</option>
@@ -194,15 +200,36 @@ if (isset($_FILES['uploadfile'])) {
                                     <input type="text" class="form-control" id="exampleDropdownFormEmail2"
                                     value="<?php echo $stu['m_number']?>"  placeholder="Password" name="m_number">
                                 </div>
-                                <div class="input-group">
-  <div class="custom-file">
-    <input type="file" name="choosefile" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-    <label class="custom-file-label" for="inputGroupFile04"><?php echo $filename?></label>
-  </div>
-  <div class="input-group-append">
-    <button class="btn btn-outline-success"   name="uploadfile" id="inputGroupFileAddon04">Button</button>
-  </div>
-</div>
+                                <div class="card-body">
+                <div id="actions" class="row">
+                  <div class="col-lg-6">
+                    <div class="btn-group w-100">
+                      <span class="btn btn-success col fileinput-button dz-clickable">
+                        <i class="fas fa-plus"></i>
+                        <span>Add files</span>
+                      </span>
+                      <button type="submit" class="btn btn-primary col start">
+                        <i class="fas fa-upload"></i>
+                        <span>Start upload</span>
+                      </button>
+                      <button type="reset" class="btn btn-warning col cancel">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Cancel upload</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 d-flex align-items-center">
+                    <div class="fileupload-process w-100">
+                      <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress=""></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="table table-striped files" id="previews">
+                  
+                </div>
+              </div>
                                 <hr>
                                 <div style="text-align:center;">
                                     <button type="submit" name="update" class="btn btn-primary col-4">Update</button>

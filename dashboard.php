@@ -126,13 +126,8 @@ include('sidebar.php');
           </p>
 
           <hr>
-          <strong><i class="fas fa-pencil-alt mr-1"></i> Year</strong>
-
-          <p class="text-muted">
-            <?php echo $user['year'] ?>
-          </p>
-
-          <hr>
+          
+          
 
           <strong><i class="far fa-file-alt mr-1"></i> Mobile Number</strong>
 
