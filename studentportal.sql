@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 29, 2023 at 04:55 PM
+-- Generation Time: Apr 23, 2023 at 04:20 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -55,14 +55,31 @@ CREATE TABLE IF NOT EXISTS `class` (
   `class_name` varchar(100) NOT NULL,
   `department` varchar(100) NOT NULL,
   PRIMARY KEY (`class_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `class`
 --
 
 INSERT INTO `class` (`class_id`, `class_name`, `department`) VALUES
-(1, 'Bachelor of Computer Application', 'School of computer Studies');
+(1, 'Bachelor of Computer Application', 'School of computer Studies'),
+(2, 'B com', 'Commerce'),
+(3, 'Bsc CS', 'School of computer studies');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `image`
+--
+
+DROP TABLE IF EXISTS `image`;
+CREATE TABLE IF NOT EXISTS `image` (
+  `img_id` int NOT NULL AUTO_INCREMENT,
+  `img_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `img_data` varchar(100) NOT NULL,
+  `s_id` int NOT NULL,
+  PRIMARY KEY (`img_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -78,7 +95,17 @@ CREATE TABLE IF NOT EXISTS `result` (
   `sem_id` int NOT NULL,
   `s_mark` int NOT NULL,
   PRIMARY KEY (`result_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `result`
+--
+
+INSERT INTO `result` (`result_id`, `sub_name`, `reg_id`, `sem_id`, `s_mark`) VALUES
+(1, 'PHP & MySQL', '1U20CA004', 6, 90),
+(2, 'PHP & MySQL', '1U20CA004', 6, 94),
+(3, '', '1U20CA004', 6, 90),
+(4, '', '1U20CA004', 6, 94);
 
 -- --------------------------------------------------------
 
@@ -96,20 +123,23 @@ CREATE TABLE IF NOT EXISTS `students` (
   `dept` varchar(50) NOT NULL,
   `stream` varchar(100) NOT NULL,
   `year` int NOT NULL,
+  `Address` varchar(100) NOT NULL,
   `m_number` bigint NOT NULL,
   `email_id` varchar(53) NOT NULL,
   `password` varchar(16) NOT NULL,
   `class_id` int NOT NULL,
   PRIMARY KEY (`s_id`),
   UNIQUE KEY `reg_id` (`reg_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`s_id`, `reg_id`, `s_name`, `f_name`, `dob`, `dept`, `stream`, `year`, `m_number`, `email_id`, `password`, `class_id`) VALUES
-(1, '1U20CA004', 'Angaleeshwar Gandhi B', 'Boominathan', '2002-10-02', 'School of Computer Studies', 'Bachelor of Computer Application', 2020, 739768784, 'ag@angaleesh@gmail.com', '7397687841', 1);
+INSERT INTO `students` (`s_id`, `reg_id`, `s_name`, `f_name`, `dob`, `dept`, `stream`, `year`, `Address`, `m_number`, `email_id`, `password`, `class_id`) VALUES
+(1, '1U20CA004', 'Angaleeshwar Gandhi B', 'Boominathan', '2002-10-02', 'School of Computer Studies', 'Bachelor of Computer Application', 2020, '12/1,parapalayam,Tirupur - 641604', 7397687841, 'ag@angaleesh@gmail.com', '7397687841', 1),
+(3, '1U20CA007', 'AAA', 'abc', '0000-00-00', '', 'Bachelor of Computer Application', 2020, '', 0, '', '1111', 1),
+(4, '1U20CA023', 'Gokulvasan K', 'Kuberarajan R', '0000-00-00', '', 'Bachelor of Computer Application', 2020, '', 8270393761, '', '23', 1);
 
 -- --------------------------------------------------------
 
@@ -124,14 +154,16 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `sem_id` int NOT NULL,
   `class_id` int NOT NULL,
   PRIMARY KEY (`sub_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subject`
 --
 
 INSERT INTO `subject` (`sub_id`, `sub_name`, `sem_id`, `class_id`) VALUES
-(1, 'PHP & MySQL', 6, 1);
+(1, 'PHP & MySQL', 6, 1),
+(2, 'Python', 6, 1),
+(3, 'Cyber Security', 6, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
