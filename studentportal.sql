@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 23, 2023 at 04:20 PM
+-- Generation Time: Apr 26, 2023 at 09:44 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -164,6 +164,49 @@ INSERT INTO `subject` (`sub_id`, `sub_name`, `sem_id`, `class_id`) VALUES
 (1, 'PHP & MySQL', 6, 1),
 (2, 'Python', 6, 1),
 (3, 'Cyber Security', 6, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet`
+--
+
+DROP TABLE IF EXISTS `wallet`;
+CREATE TABLE IF NOT EXISTS `wallet` (
+  `wal_id` int NOT NULL AUTO_INCREMENT,
+  `s_id` int NOT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`wal_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `wallet`
+--
+
+INSERT INTO `wallet` (`wal_id`, `s_id`, `amount`) VALUES
+(1, 1, '30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet_req`
+--
+
+DROP TABLE IF EXISTS `wallet_req`;
+CREATE TABLE IF NOT EXISTS `wallet_req` (
+  `r_id` int NOT NULL AUTO_INCREMENT,
+  `s_id` int NOT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  `sts` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`r_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `wallet_req`
+--
+
+INSERT INTO `wallet_req` (`r_id`, `s_id`, `amount`, `sts`) VALUES
+(1, 1, '10', 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
