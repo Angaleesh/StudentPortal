@@ -44,6 +44,35 @@ include('sidebar.php');
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
+            <?php 
+                            $wal=mysqli_query($dbConn,"select amount from wallet where s_id=".$_SESSION['member_id']);
+                            $w=mysqli_fetch_array($wal);
+                            ?>
+            <li>
+                <button type="button" class="btn btn-block btn-dark btn-sm"><a href="wallet_req.php"> &#8377;<?php echo $w[0] ?>.00</a></button>
+                </li>&nbsp;
+                <!-- <div class="modal fade show" id="modal-sm" style="display: block;" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Small Modal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>One fine body…</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+          /.modal-content -->
+        <!-- </div>
+      
+      </div> -->
+            
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
               <li class="breadcrumb-item"><a href="logout.php">Logout</a></li>
             </ol>
@@ -88,7 +117,7 @@ include('sidebar.php');
           </p>
 
           <hr>
-        <div class="card-body">
+        
           <strong><i class="fas fa-book mr-1"></i> Father Name</strong>
 
           <p class="text-muted">

@@ -69,17 +69,14 @@ include('sidebar.php');
                                     <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
                                         alt="User profile picture">
                                 </div>
-
+                                &nbsp; 
                                 <h3 class="profile-username text-center"><?php echo $row["s_name"]?></h3>
-
                                 <p class="text-muted text-center"><?php echo $row["reg_id"]?></p>
-
-
-
                                 <a href="dashboard.php?updid=<?php echo $row["s_id"]?>" class="btn btn-primary btn-block"><b>View</b></a>
                             </div>
                             <!-- /.card-body -->
                         </div>
+                        &nbsp; 
                         &nbsp; 
                     <?php  }
                 } ?>

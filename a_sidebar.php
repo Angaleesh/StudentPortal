@@ -60,6 +60,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="req_wallet.php" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Request Wallet
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="add_result.php" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
             <p>
