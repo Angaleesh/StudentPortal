@@ -3,24 +3,14 @@ session_start();
 include('database.php');
 include('sidebar.php');
 
-if (isset($_POST['add'])) {
-    $s_name = $_POST['s_name'];
-    $f_name = $_POST['f_name'];
-    $password = $_POST['password'];
-    $year = $_POST['year'];
-    $class_id = $_POST['class_id'];
-    $r = "select class_name from class;";
-    $r1 = mysqli_query($dbConn, $r);
-    $str = mysqli_fetch_array($r1);
-    $stream = $str[0];
-    $reg_id = $_POST['reg_id'];
-    $dob = $_POST['dob'];
+if (isset($_POST['submit'])) {
+    $amount=$_POST['amount'];
     // echo $utype;
 
-    $query = "insert into `students`(s_name,f_name,password,year,stream,reg_id,dob,class_id) values ('$s_name','$f_name','$password',$year,'$stream','$reg_id','$dob',$class_id)";
+    $query = "insert into `wallet_req`(s_id,amount) values (".$_SESSION['member_id'].",'$amount')";
     $upd = mysqli_query($dbConn, $query);
     if ($upd) {
-        header('location:student.php');
+        header('location:wallet_req.php');
         // echo "inserted";
     } else {
         echo "Not inserted";
@@ -68,6 +58,13 @@ if (isset($_POST['add'])) {
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
+                        <?php 
+                            $wal=mysqli_query($dbConn,"select amount from wallet where s_id=".$_SESSION['member_id']);
+                            $w=mysqli_fetch_array($wal);
+                            ?>
+            <li>
+                <button type="button" class="btn btn-block btn-dark btn-sm"><a href="wallet_req.php"> &#8377;<?php echo $w[0] ?>.00</a></button>
+                </li>&nbsp;
                             <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                             <li class="breadcrumb-item"><a href="logout.php">Logout</a></li>
                         </ol>
@@ -78,53 +75,21 @@ if (isset($_POST['add'])) {
         <!-- /.content-header -->
         <!--  -->
         <hr>
-        <div class="dropdown show text-align">
+        <div class="container-fluid col-12  my-5">
+        <div class="dropdown show align-center">
             <a class="btn btn-secondary dropdown-toggle col-8" href="#" role="button" id="dropdownMenuLink"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add Subject
+                Request wallet
             </a>
             <form class="dropdown-menu p-4 col-8" method="POST">
                 <div class="form-group">
-                    <label for="exampleDropdownFormEmail2">Subject Name</label>
-                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Subject_name"
-                        name="sub_name">
+                    <label for="exampleDropdownFormEmail2">Amount</label>
+                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Enter Amount"
+                        name="amount">
                 </div>
-                <div class="form-group" data-select2-id="55">
-                    <label>Course</label>
-                    <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
-                        data-select2-id="17" tabindex="-1" aria-hidden="true" name="class_name">
-                        <?php
-                        $sql = "select * from class;";
-                        $result = mysqli_query($dbConn, $sql);
-                        if ($result) {
-                            while ($row = mysqli_fetch_array($result)) { ?>
-                                <option value=<?php echo $row['class_id']; ?>>
-                                    <?php echo $row['class_name']; ?>
-                                </option>
-                                <?php
-                            }
-                        }
-
-                        ?>
-                        <!-- updating in local -->
-                    </select>
-                </div>
-                <div class="form-group" data-select2-id="55">
-                    <label>Semester</label>
-                    <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
-                        data-select2-id="17" tabindex="-1" aria-hidden="true" name="sem_id">
-                        <option value="1">Semester - I</option>
-                        <option value="2">Semester - II</option>
-                        <option value="3">Semester - III</option>
-                        <option value="4">Semester - IV</option>
-                        <option value="5">Semester - V</option>
-                        <option value="6">Semester - VI</option>
-                    </select>
-                </div>
-
                 <hr>
                 <div style="text-align:center;">
-                    <button type="submit" name="submit" class="btn btn-primary col-4">Add</button>
+                    <button type="submit" name="submit" class="btn btn-primary col-4">Request</button>
 
                 </div>
             </form>
@@ -134,14 +99,11 @@ if (isset($_POST['add'])) {
             <!-- Main row -->
         </div>
 
-        <div class="container col-12  my-5">
+        
             <table class="table table-hover table-stripped">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">Wallet ID</th>
-                        <th scope="col">Regiter ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Wallet Amount</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Status</th>
 
@@ -149,7 +111,7 @@ if (isset($_POST['add'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "select * from wallet_req where sts=0;";
+                    $sql = "select * from wallet_req ";
                     $result = mysqli_query($dbConn, $sql);
                     if ($result) {
                         while ($row = mysqli_fetch_assoc($result)) {
@@ -162,15 +124,6 @@ if (isset($_POST['add'])) {
                                 <th scope="row">
                                     <?php echo $row['r_id'] ?>
                                 </th>
-                                <td>
-                                    <?php echo $rr['reg_id'] ?>
-                                </td>
-                                <td>
-                                    <?php echo $rr['s_name'] ?>
-                                </td>
-                                <td>
-                                    <?php echo $rrr['amount'] ?>
-                                </td>
                                 <td>
                                     <?php echo $row['amount'] ?>
                                 </td>

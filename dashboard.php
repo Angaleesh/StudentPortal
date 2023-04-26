@@ -40,7 +40,7 @@ include('sidebar.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-4">Dashboard</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -82,13 +82,12 @@ include('sidebar.php');
     </div>
     <!-- /.content-header -->
     <?php
+        $id=$_SESSION["member_id"];
     if (isset( $_GET['updid'])) {
       $id = $_GET['updid'];
       
   }
-  else{
-    $id=$_SESSION["member_id"];
-  }
+
     $qry = "select * from students where s_id=" . $id;
     $result = mysqli_query($dbConn, $qry);
     $user = mysqli_fetch_assoc($result);
@@ -98,7 +97,7 @@ include('sidebar.php');
     <div class="container">
       <div class="card-body box-profile">
         <div class="text-center">
-          <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
+          <img class="profile-user-img img-fluid img-circle" src="uploads/<?php echo $user['s_id'];?>.jpeg"
             alt="User profile picture">
         </div>
 

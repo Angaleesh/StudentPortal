@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Manage Subjects</h1>
+            <h1 class="m-4">Manage Subjects</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
     </div>
     <!-- /.content-header -->
     <!--  -->
-    <div class="content-wrapper">
+    <div class="container-fluid">
       <?php
       $sql = "select * from subject;";
       $result = mysqli_query($dbConn, $sql);
@@ -73,37 +73,40 @@ if (isset($_POST['submit'])) {
         while ($row = mysqli_fetch_assoc($result)) {
           $count = "SELECT * FROM `class` where class_id=" . $row['class_id'];
           $class = mysqli_fetch_assoc(mysqli_query($dbConn, $count)); ?>
-          <div class="col-md-3">
-            <div class="card card-primary collapsed-card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <?php echo $row['sub_name'] ?>
-                </h3>
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-4">
+              <div class="card card-primary collapsed-card mt-3">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <?php echo $row['sub_name'] ?>
+                  </h3>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
-                  </button>
+                  <div class="card-tools mt-2">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <!-- /.card-tools -->
                 </div>
-                <!-- /.card-tools -->
+                <!-- /.card-header -->
+                <div class="card-body" style="display: none;">
+                  <b>Class: </b>
+                  <?php echo $class['class_name'] ?><br>
+                  <b>Department: </b>
+                  <?php echo $class['department'] ?>
+                </div>
+                <!-- /.card-body -->
               </div>
-              <!-- /.card-header -->
-              <div class="card-body" style="display: none;">
-                <b>Class: </b>
-                <?php echo $class['class_name'] ?><br>
-                <b>Department: </b>
-                <?php echo $class['department'] ?>
-              </div>
-              <!-- /.card-body -->
+              <!-- /.card -->
             </div>
-            <!-- /.card -->
           </div>
+
           <?php
         }
       }
 
       ?>
       <br>
-      <div class="dropdown show">
+      <div class="dropdown show d-flex justify-content-center">
         <a class="btn btn-secondary dropdown-toggle col-8" href="#" role="button" id="dropdownMenuLink"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Add Subject
@@ -123,7 +126,7 @@ if (isset($_POST['submit'])) {
               $result = mysqli_query($dbConn, $sql);
               if ($result) {
                 while ($row = mysqli_fetch_array($result)) { ?>
-                  <option value=<?php echo $row['class_id'];?>>
+                  <option value=<?php echo $row['class_id']; ?>>
                     <?php echo $row['class_name']; ?>
                   </option>
                   <?php
@@ -131,7 +134,7 @@ if (isset($_POST['submit'])) {
               }
 
               ?>
-<!-- updating in local -->
+              <!-- updating in local -->
             </select>
           </div>
           <div class="form-group" data-select2-id="55">
@@ -150,7 +153,6 @@ if (isset($_POST['submit'])) {
           <hr>
           <div style="text-align:center;">
             <button type="submit" name="submit" class="btn btn-primary col-4">Add</button>
-
           </div>
         </form>
         <!-- <button type="submit" name="add" class="btn btn-primary col-8"><a href="add_class.php" class='text-light'
@@ -158,9 +160,7 @@ if (isset($_POST['submit'])) {
         <!-- /.row -->
         <!-- Main row -->
       </div>
-
-     
 </body>
 <?php
-      include('footer.php');
-      ?>
+include('footer.php');
+?>

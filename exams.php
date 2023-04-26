@@ -1,6 +1,6 @@
 <?php
 session_start();
-// include('header.php');
+include('database.php');
 include('sidebar.php');
 ?>
 
@@ -43,6 +43,13 @@ include('sidebar.php');
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
+                        <?php 
+                            $wal=mysqli_query($dbConn,"select amount from wallet where s_id=".$_SESSION['member_id']);
+                            $w=mysqli_fetch_array($wal);
+                            ?>
+            <li>
+                <button type="button" class="btn btn-block btn-dark btn-sm"><a href="wallet_req.php"> &#8377;<?php echo $w[0] ?>.00</a></button>
+                </li>&nbsp;
                             <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                             <li class="breadcrumb-item"><a href="logout.php">Logout</a></li>
                         </ol>

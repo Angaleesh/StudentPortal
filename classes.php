@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Manage Classes</h1>
+            <h1 class="m-4">Manage Classes</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
     <!-- /.content-header -->
     <!--  -->
     <div class="content">
-      <div class="card text-center  ">
+      <div class="card text-center">
         <div class="card-header">
           <?php
           $sql = "select * from class;";
@@ -75,17 +75,16 @@ if (isset($_POST['submit'])) {
             while ($row = mysqli_fetch_assoc($result)) {
               $count = "SELECT COUNT(*) FROM `students` where class_id=" . $row['class_id'];
               $no_of_students = mysqli_fetch_array(mysqli_query($dbConn, $count)); ?>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="card card-primary collapsed-card">
+              <div class="row d-flex justify-content-center">
+                <div class="col-4">
+                  <div class="card card-primary collapsed-card mt-3">
                     <div class="card-header">
                       <h3 class="card-title">
                         <?php echo $row['class_name'] ?>
                       </h3>
 
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
-                        </button>
+                      <div class="card-tools mt-2">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
                       </div>
                       <!-- /.card-tools -->
                     </div>
@@ -125,7 +124,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="form-group">
               <label for="exampleDropdownFormPassword2">Department</label>
-              <input type="text" class="form-control" id="exampleDropdownFormPassword2" name="dept">
+              <input type="text" class="form-control" id="exampleDropdownFormPassword2" placeholder="Dept_name" name="dept">
             </div>
             <div style="text-align:center;">
               <button type="submit" name="submit" class="btn btn-primary col-4">Add</button>

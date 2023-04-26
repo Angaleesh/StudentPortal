@@ -33,40 +33,69 @@ if (isset($_POST['update'])) {
     } else {
         echo "Not inserted";
     }
-}
-if (isset($_FILES['uploadfile'])) {
+    $file = $_FILES['profile_picture'];
+    $fileName = $_FILES['profile_picture']['name'];
+    $fileTmpName = $_FILES['profile_picture']['tmp_name'];
+    $fileSize = $_FILES['profile_picture']['size'];
+    $fileError = $_FILES['profile_picture']['error'];
+    $fileType = $_FILES['profile_picture']['type'];
 
-    $filename = $_FILES["choosefile"]["name"];
+    $fileExt = explode('.', $fileName);
+    $fileActualExt = strtolower(end($fileExt));
 
-    $tempname = $_FILES["choosefile"]["tmp_name"];  
+    $allowed = array('jpg', 'jpeg', 'png');
 
-        $folder = "image/".$filename;
-
-      // connect with the database
-
-    
-
-        // query to insert the submitted data
-
-        $sql = "INSERT INTO image (img_name,img_data,s_id) VALUES ('".$filename."','".$tempname."',".$_SESSION["member_id"].")";
-
-     // function to execute above query
-
-        mysqli_query($dbConn, $sql);       
-
-        // Add the image to the "image" folder"
-
-        if (move_uploaded_file($tempname, $folder)) {
-
-            $msg = "Image uploaded successfully";
-
-        }else{
-
-            $msg = "Failed to upload image";
-
+    if (in_array($fileActualExt, $allowed)) {
+        if ($fileError === 0) {
+            if ($fileSize < 1000000) {
+                $fileNameNew = uniqid('', true).".".$fileActualExt;
+                $fileDestination = 'uploads/'.$fileNameNew;
+                move_uploaded_file($fileTmpName, $fileDestination);
+                echo "Profile picture uploaded successfully!";
+            } else {
+                echo "Your file is too big!";
+            }
+        } else {
+            echo "There was an error uploading your file!";
+        }
+    } else {
+        echo "You cannot upload files of this type!";
     }
 
 }
+// if (isset($_FILES['uploadfile'])) {
+
+//     $filename = $_FILES["choosefile"]["name"];
+
+//     $tempname = $_FILES["choosefile"]["tmp_name"];  
+
+//         $folder = "image/".$filename;
+
+//       // connect with the database
+
+    
+
+//         // query to insert the submitted data
+
+//         $sql = "INSERT INTO image (img_name,img_data,s_id) VALUES ('".$filename."','".$tempname."',".$_SESSION["member_id"].")";
+
+//      // function to execute above query
+
+//         mysqli_query($dbConn, $sql);       
+
+//         // Add the image to the "image" folder"
+
+//         if (move_uploaded_file($tempname, $folder)) {
+
+//             $msg = "Image uploaded successfully";
+
+//         }else{
+
+//             $msg = "Failed to upload image";
+
+//     }
+
+// }
 ?>
 
 <head>
@@ -201,31 +230,8 @@ if (isset($_FILES['uploadfile'])) {
                                     value="<?php echo $stu['m_number']?>"  placeholder="Password" name="m_number">
                                 </div>
                                 <div class="card-body">
-                <div id="actions" class="row">
-                  <div class="col-lg-6">
-                    <div class="btn-group w-100">
-                      <span class="btn btn-success col fileinput-button dz-clickable">
-                        <i class="fas fa-plus"></i>
-                        <span>Add files</span>
-                      </span>
-                      <button type="submit" class="btn btn-primary col start">
-                        <i class="fas fa-upload"></i>
-                        <span>Start upload</span>
-                      </button>
-                      <button type="reset" class="btn btn-warning col cancel">
-                        <i class="fas fa-times-circle"></i>
-                        <span>Cancel upload</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 d-flex align-items-center">
-                    <div class="fileupload-process w-100">
-                      <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress=""></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                                <label class="form-label" for="customFile">Default file input example</label>
+<input type="file" class="form-control" name="profile_picture" id="customFile" />
                 <div class="table table-striped files" id="previews">
                   
                 </div>

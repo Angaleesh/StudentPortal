@@ -40,10 +40,17 @@ include('sidebar.php');
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
+                        <h1 class="m-4">Dashboard</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
+                        <?php 
+                            $wal=mysqli_query($dbConn,"select amount from wallet where s_id=".$_SESSION['member_id']);
+                            $w=mysqli_fetch_array($wal);
+                            ?>
+            <li>
+                <button type="button" class="btn btn-block btn-dark btn-sm"><a href="wallet_req.php"> &#8377;<?php echo $w[0] ?>.00</a></button>
+                </li>&nbsp;
                             <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                             <li class="breadcrumb-item"><a href="logout.php">Logout</a></li>
                         </ol>
@@ -63,22 +70,27 @@ include('sidebar.php');
                 if ($result) {
                     while ($row = mysqli_fetch_array($result)) {
                         ?>
-                        <div class="card card-primary card-outline col-2">
+                        <div class="card ml-4 card-primary card-outline col-2">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
+                                    <img class="profile-user-img img-fluid img-circle" src="uploads/<?php echo $row['s_id']?>.jpeg"
                                         alt="User profile picture">
                                 </div>
-                                &nbsp; 
-                                <h3 class="profile-username text-center"><?php echo $row["s_name"]?></h3>
-                                <p class="text-muted text-center"><?php echo $row["reg_id"]?></p>
-                                <a href="dashboard.php?updid=<?php echo $row["s_id"]?>" class="btn btn-primary btn-block"><b>View</b></a>
+                                <h3 class="mt-2 profile-username text-center">
+                                    <?php echo $row["s_name"] ?>
+                                </h3>
+                                <p class="text-muted text-center">
+                                    <?php echo $row["reg_id"] ?>
+                                </p>
                             </div>
-                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <a href="dashboard.php?updid=<?php echo $row["s_id"] ?>"
+                                    class="btn btn-primary btn-block"><b>View</b></a>
+                            </div>
                         </div>
-                        &nbsp; 
-                        &nbsp; 
-                    <?php  }
+                        &nbsp;
+                        &nbsp;
+                    <?php }
                 } ?>
             </div>
         </div>
